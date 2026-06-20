@@ -5,17 +5,34 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Happy Birthday Mughizhiniyazh</title>
   <style>
+    @import url('https://fonts.googleapis.com/css2?family=Outfit:wght@400;600&display=swap');
+
     body {
       margin: 0;
-      background-color: #111;
+      background: radial-gradient(circle at center, #023e8a 0%, #001233 70%, #000411 100%);
       overflow: hidden;
+      font-family: 'Outfit', sans-serif;
     }
 
     .container {
       position: relative;
       width: 100vw;
       height: 100vh;
-      background-color: #222;
+      background: transparent;
+    }
+
+    /* Ambient background glow */
+    .container::after {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 70vw;
+      height: 70vw;
+      background: radial-gradient(circle, rgba(0, 180, 255, 0.15) 0%, transparent 60%);
+      pointer-events: none;
+      z-index: 0;
     }
 
     .image {
@@ -23,105 +40,152 @@
       width: 160px;
       height: 120px;
       object-fit: cover;
-      border: 3px solid white;
-      border-radius: 8px;
-      transition: all 0.7s ease;
-      opacity: 0.6;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+      transition: all 0.8s cubic-bezier(0.25, 1, 0.5, 1);
+      opacity: 0.4;
       z-index: 1;
+    }
+
+    .image:hover {
+      opacity: 0.7;
+      box-shadow: 0 12px 40px rgba(0, 180, 255, 0.4);
+      z-index: 2;
     }
 
     .image.pop {
       top: 50% !important;
       left: 50% !important;
       transform: translate(-50%, -50%) !important;
-      max-width: 90vw !important;
-      max-height: 80vh !important;
+      max-width: 85vw !important;
+      max-height: 75vh !important;
       width: auto !important;
       height: auto !important;
       z-index: 10 !important;
       opacity: 1 !important;
-      animation: bounce 0.5s ease;
-      object-fit: contain;
-      background-color: black;
+      animation: popIn 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      object-fit: cover;
+      
+      /* Funky Torn Border applied directly to the image */
+      border: none;
+      border-radius: 0;
+      clip-path: polygon(
+        1% 2%, 4% 0%, 8% 3%, 12% 1%, 15% 4%, 21% 0%, 25% 3%, 31% 1%, 35% 4%, 41% 0%, 45% 3%, 
+        52% 1%, 55% 4%, 61% 0%, 65% 3%, 72% 1%, 77% 4%, 82% 0%, 88% 3%, 92% 1%, 97% 4%, 100% 1%, 
+        99% 8%, 100% 14%, 98% 21%, 100% 27%, 99% 33%, 100% 41%, 98% 47%, 100% 55%, 99% 62%, 100% 68%, 
+        98% 75%, 100% 82%, 99% 88%, 100% 95%, 98% 100%, 
+        95% 98%, 91% 100%, 85% 97%, 81% 100%, 75% 98%, 68% 100%, 65% 97%, 59% 100%, 54% 98%, 
+        49% 100%, 44% 97%, 38% 100%, 35% 98%, 29% 100%, 25% 97%, 18% 100%, 15% 98%, 11% 100%, 
+        7% 97%, 3% 100%, 0% 98%, 
+        1% 92%, 0% 86%, 2% 79%, 0% 73%, 1% 65%, 0% 59%, 2% 52%, 0% 46%, 1% 39%, 0% 33%, 2% 26%, 0% 19%, 1% 12%, 0% 5%
+      );
+      filter: drop-shadow(0 15px 30px rgba(0,0,0,0.8));
     }
 
-    @keyframes bounce {
-      0%   { transform: translate(-50%, -50%) scale(1); }
-      50%  { transform: translate(-50%, -52%) scale(1.08); }
-      100% { transform: translate(-50%, -50%) scale(1); }
+    @keyframes popIn {
+      0%   { transform: translate(-50%, -50%) scale(0.8); opacity: 0; }
+      50%  { transform: translate(-50%, -50%) scale(1.05); opacity: 1; }
+      100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
     }
 
     .butterfly-wrapper {
       position: absolute;
-      bottom: 20px;
+      bottom: 30px;
       left: 50%;
       transform: translateX(-50%);
-      width: 90px;
-      height: 90px;
+      width: 85px;
+      height: 85px;
       z-index: 20;
       cursor: pointer;
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    .butterfly-wrapper:hover {
+      transform: translateX(-50%) scale(1.1);
     }
 
     .butterfly-btn {
       width: 100%;
       height: 100%;
-      animation: pulse 2s infinite ease-in-out;
+      animation: floating 3s infinite ease-in-out;
       transition: transform 0.3s ease;
+      filter: drop-shadow(0 4px 10px rgba(0,0,0,0.5));
     }
 
     .butterfly-btn.animate {
-      animation: flutter 0.6s ease;
-      filter: drop-shadow(0 0 15px #ff66cc);
+      animation: flutterClick 0.6s ease;
+      filter: drop-shadow(0 0 20px #00ffff);
     }
 
     .click-hint {
       position: absolute;
-      top: -25px;
+      top: -45px;
       left: 50%;
       transform: translateX(-50%);
-      font-size: 28px;
-      color: #ffccff;
-      animation: bounceArrow 1.2s infinite ease-in-out;
-      text-shadow: 0 0 6px #fff, 0 0 10px #ff69b4;
+      font-size: 32px;
+      color: #ffd700;
+      -webkit-text-stroke: 1.5px #001233;
+      animation: bounceArrow 1.5s infinite ease-in-out;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.8)) drop-shadow(0 0 15px #00ffff);
       pointer-events: none;
     }
 
     @keyframes bounceArrow {
       0%, 100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(-6px); }
+      50% { transform: translateX(-50%) translateY(-8px); }
     }
 
     .butterfly-wrapper::before {
       content: '';
       position: absolute;
-      top: -10px;
-      left: -10px;
-      right: -10px;
-      bottom: -10px;
+      top: -15px;
+      left: -15px;
+      right: -15px;
+      bottom: -15px;
       border-radius: 50%;
-      box-shadow: 0 0 20px #ff69b4;
+      box-shadow: 0 0 20px rgba(0, 180, 255, 0.4);
       z-index: -1;
-      opacity: 0.5;
-      animation: glowPulse 2s infinite;
+      opacity: 0.6;
+      animation: richGlowPulse 2.5s infinite alternate;
     }
 
-    @keyframes glowPulse {
-      0%, 100% { opacity: 0.5; box-shadow: 0 0 15px #ff69b4; }
-      50% { opacity: 1; box-shadow: 0 0 30px #ff1493; }
+    @keyframes richGlowPulse {
+      0% { opacity: 0.5; box-shadow: 0 0 15px rgba(0, 180, 255, 0.3); }
+      100% { opacity: 1; box-shadow: 0 0 35px rgba(0, 255, 255, 0.7); }
     }
 
-    @keyframes pulse {
-      0%   { transform: scale(1); opacity: 0.8; }
-      50%  { transform: scale(1.1); opacity: 1; }
-      100% { transform: scale(1); opacity: 0.8; }
+    @keyframes floating {
+      0%   { transform: translateY(0px) scale(1); }
+      50%  { transform: translateY(-8px) scale(1.05); }
+      100% { transform: translateY(0px) scale(1); }
     }
 
-    @keyframes flutter {
+    @keyframes flutterClick {
       0% { transform: scale(1) rotate(0deg); }
-      25% { transform: scale(1.05) rotate(5deg); }
-      50% { transform: scale(1.1) rotate(-5deg); }
-      75% { transform: scale(1.05) rotate(3deg); }
+      25% { transform: scale(1.1) rotate(8deg); }
+      50% { transform: scale(1.2) rotate(-8deg); }
+      75% { transform: scale(1.1) rotate(5deg); }
       100% { transform: scale(1) rotate(0deg); }
+    }
+
+    .ocean-animal {
+      position: absolute;
+      z-index: 0;
+      opacity: 0;
+      pointer-events: none;
+      animation: floatUp linear infinite;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+    }
+
+    @keyframes floatUp {
+      0% { transform: translateY(0) translateX(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.6; }
+      25% { transform: translateY(-25vh) translateX(30px) rotate(10deg); }
+      50% { transform: translateY(-50vh) translateX(-20px) rotate(-10deg); }
+      75% { transform: translateY(-75vh) translateX(30px) rotate(5deg); }
+      90% { opacity: 0.6; }
+      100% { transform: translateY(-110vh) translateX(-30px) rotate(-5deg); opacity: 0; }
     }
 
     canvas.confetti-canvas {
@@ -140,11 +204,12 @@
   <div class="container" id="container"></div>
 
   <div class="butterfly-wrapper" onclick="onButterflyClick()">
-    <div class="click-hint">⬇</div>
+    <div class="click-hint">⚓</div>
     <img src="starfish.png" class="butterfly-btn" id="butterfly" alt="Butterfly Button" />
   </div>
 
-  <audio id="birthdayAudio" src="happy_birthday.mp3" preload="auto"></audio>
+  <audio id="bgmAudio" src="background_melody.mp3" loop preload="auto"></audio>
+  <audio id="birthdayAudio" src="happy_birthday_modern.mp3" preload="auto"></audio>
   <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
 
   <script>
@@ -153,6 +218,7 @@
     let current = null;
     let nextIndex = 0;
     let hasShownBanner = false;
+    let bgmStarted = false;
 
     for (let i = 1; i <= 11; i++) {
       const img = document.createElement('img');
@@ -166,11 +232,13 @@
     function randomizePosition(img) {
       const top = Math.random() * 80 + 5;
       const left = Math.random() * 80 + 5;
+      const rotation = Math.random() * 40 - 20; // Slight random rotation
       img.style.top = top + '%';
       img.style.left = left + '%';
+      img.style.transform = `rotate(${rotation}deg)`;
       img.style.width = '160px';
       img.style.height = '120px';
-      img.style.opacity = 0.6;
+      img.style.opacity = 0.4;
       img.style.zIndex = 1;
     }
 
@@ -194,11 +262,28 @@
         if (banner) banner.remove();
         nextIndex = 0;
         hasShownBanner = false;
+
+        // Stop birthday audio
+        const bdayAudio = document.getElementById('birthdayAudio');
+        if (bdayAudio) {
+          bdayAudio.pause();
+          bdayAudio.currentTime = 0; // reset for next time
+        }
+        
+        // Resume background melody
+        const bgm = document.getElementById('bgmAudio');
+        if (bgm) {
+          bgm.play().catch(() => console.warn("BGM couldn't resume."));
+        }
+
         showNext(); // show image1 again
       }
     }
 
     function showBirthdayBanner() {
+      const bgm = document.getElementById('bgmAudio');
+      if (bgm) bgm.pause();
+
       const banner = document.createElement('img');
       banner.src = 'image12.jpeg';
       banner.id = 'birthdayBanner';
@@ -207,6 +292,7 @@
 
       const audio = document.getElementById('birthdayAudio');
       if (audio) {
+		audio.volume = 0.25; // Lesser volume
         audio.play().catch(() => {
           console.warn("Birthday audio could not play.");
         });
@@ -216,6 +302,7 @@
     }
 
     function onButterflyClick() {
+
       const butterfly = document.getElementById('butterfly');
       butterfly.classList.add('animate');
       showNext();
@@ -224,8 +311,52 @@
       }, 600);
     }
 
+    function tryPlayBgm() {
+      if (!bgmStarted) {
+        const bgm = document.getElementById('bgmAudio');
+        if (bgm) {
+          bgm.volume = 0.15; // Lesser volume
+          bgm.play().then(() => {
+            bgmStarted = true;
+          }).catch(() => {
+            console.warn("BGM autoplay blocked by browser. Waiting for interaction.");
+          });
+        }
+      }
+    }
+
+    function createOceanAnimals() {
+      const animContainer = document.getElementById('container');
+      const animals = ['🐠', '🐡', '🐙', '🦀', '🐚', '🐬', '🫧', '🐢', '🦑', '🐋'];
+      
+      for (let i = 0; i < 25; i++) {
+        const animal = document.createElement('div');
+        animal.innerText = animals[Math.floor(Math.random() * animals.length)];
+        animal.classList.add('ocean-animal');
+        
+        const size = Math.random() * 25 + 15;
+        const left = Math.random() * 100;
+        const duration = Math.random() * 20 + 15;
+        const delay = Math.random() * 15;
+        
+        animal.style.fontSize = size + 'px';
+        animal.style.left = left + 'vw';
+        animal.style.bottom = '-50px';
+        animal.style.animationDuration = duration + 's';
+        animal.style.animationDelay = delay + 's';
+        
+        animContainer.appendChild(animal);
+      }
+    }
+
     window.onload = () => {
       showNext();
+      tryPlayBgm();
+      createOceanAnimals();
+      
+      // If autoplay is blocked, start it on the very first tap/click anywhere
+      document.body.addEventListener('click', tryPlayBgm, { once: true });
+      document.body.addEventListener('touchstart', tryPlayBgm, { once: true });
     };
 
     // Confetti logic

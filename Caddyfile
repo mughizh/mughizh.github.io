@@ -1,0 +1,23 @@
+# Caddyfile
+velan.nvit.in {
+    # Set the web root to the current directory
+    root * .
+
+    # Enable the static file server
+    file_server
+
+    # Compress responses to optimize performance
+    encode zstd gzip
+
+    # Set some basic security headers
+    header {
+        # Prevents browsers from guessing the MIME type
+        X-Content-Type-Options nosniff
+        
+        # Prevents the site from being framed (Clickjacking protection)
+        X-Frame-Options DENY
+        
+        # Enables cross-site scripting (XSS) filtering in browsers
+        X-XSS-Protection "1; mode=block"
+    }
+}
