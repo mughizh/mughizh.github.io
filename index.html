@@ -208,8 +208,8 @@
     <img src="starfish.png" class="butterfly-btn" id="butterfly" alt="Butterfly Button" />
   </div>
 
-  <audio id="bgmAudio" src="background_melody.mp3" loop preload="auto"></audio>
-  <audio id="birthdayAudio" src="happy_birthday_modern.mp3" preload="auto"></audio>
+  <audio id="bgmAudio" src="background_melody.mp3" loop preload="metadata"></audio>
+  <audio id="birthdayAudio" src="happy_birthday_modern.mp3" preload="none"></audio>
   <canvas id="confettiCanvas" class="confetti-canvas"></canvas>
 
   <script>
@@ -349,7 +349,7 @@
       }
     }
 
-    window.onload = () => {
+    document.addEventListener('DOMContentLoaded', () => {
       showNext();
       tryPlayBgm();
       createOceanAnimals();
@@ -357,7 +357,7 @@
       // If autoplay is blocked, start it on the very first tap/click anywhere
       document.body.addEventListener('click', tryPlayBgm, { once: true });
       document.body.addEventListener('touchstart', tryPlayBgm, { once: true });
-    };
+    });
 
     // Confetti logic
     function launchConfetti() {
